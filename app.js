@@ -1,7 +1,10 @@
 const express = require('express');
-const app = express();
+const secure = require('express-force-https');
 const mongoose = require('mongoose');
 require('dotenv').config({ path: './config/.env' });
+
+const app = express();
+app.use(secure);
 
 const connectDB = require('./config/db');
 connectDB();
