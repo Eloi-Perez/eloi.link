@@ -6,6 +6,10 @@
   "scripts": {
     "start": "node app.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eloi-Perez/eloi.link.git"
+  },
   "author": "Eloi Perez Aguilar",
   "license": "ISC",
   "dependencies": {
