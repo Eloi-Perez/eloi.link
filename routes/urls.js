@@ -19,7 +19,7 @@ router.get('/to', async (req, res) => {
         try {
             let findUrl = await Url.findOne({ origUrl });
             if (findUrl) {
-                res.json(findUrl);
+                res.json({ clicks: findUrl.clicks, origUrl: findUrl.origUrl, shortUrl: findUrl.shortUrl, crationDate: findUrl.date });
             } else {
                 try {
                     const shortUrl = `${base}/${urlId}`;
@@ -30,7 +30,7 @@ router.get('/to', async (req, res) => {
                         date: new Date(),
                     });
                     await url.save();
-                    res.send(`<a href="${url.shortUrl}"><h1 style="text-align: center;">${url.shortUrl}</h1></a>`);
+                    res.send(`<a href="${url.shortUrl}"><h1 style="text-align: center;">eloi.link/${urlId}</h1></a>`);
                 } catch (err) {
                     if (err.code === 11000) {
                         try {
@@ -44,7 +44,7 @@ router.get('/to', async (req, res) => {
                                 date: new Date(),
                             });
                             await url.save();
-                            res.send(`<a href="${url.shortUrl}"><h1 style="text-align: center;">${url.shortUrl}</h1></a>`);
+                            res.send(`<a href="${url.shortUrl}"><h1 style="text-align: center;">eloi.link/${urlId}</h1></a>`);
                         } catch (err) {
                             console.log(err);
                             res.status(500).json('Server Error');
