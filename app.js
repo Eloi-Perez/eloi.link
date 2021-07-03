@@ -15,7 +15,7 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.send(`<div style="text-align: center;">
     <h1>Hello</h1>
-    <p>Are you curius about how this app works?</p>
+    <p>Are you curious about how this app works?</p>
     <p>Check the code in <a href="https://github.com/Eloi-Perez/eloi.link">GitHub</a></p>
     </div>`);
 });
