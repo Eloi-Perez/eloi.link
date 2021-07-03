@@ -13,7 +13,7 @@ router.get('/to', async (req, res) => {
     const origUrl = req.query.url;
     const base = process.env.BASE;
     let urlId = nanoid(4);
-    // let urlId = generate('1234a', 1);
+    // let urlId = generate('1234a', 4); //to limit or expand the dictionary
 
     if (utils.validateUrl(origUrl)) {
         try {
@@ -32,7 +32,7 @@ router.get('/to', async (req, res) => {
                     await url.save();
                     res.send(`<a href="${url.shortUrl}"><h1 style="text-align: center;">eloi.link/${urlId}</h1></a>`);
                 } catch (err) {
-                    if (err.code === 11000) {
+                    if (err.code === 11000) { // if Duplicate shortUrl
                         try {
                             console.log('replacing ID...');
                             urlId = nanoid(5);
