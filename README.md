@@ -4,7 +4,7 @@
 ### For creating a link:
 Go to https://eloi.link/to?url=<url_to_be_shorten>
 
-Adding your url after the =
+(Add your url after the =)
 
 
 ### About
