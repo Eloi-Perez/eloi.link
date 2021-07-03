@@ -1,5 +1,11 @@
 # eloi.link
+#### A easy to use and fast URL shortener
 
+### For creating a link:
+In your favourite browser, go to http://<your_domain>/to?url=<url_to_be_shorten.com>
+
+
+### About
 This project uses Node, Express, Mongoose and NanoID.
 
 If you want to use this app on your own hosting you will need a MongoDB database (there is free tiers on https://account.mongodb.com) 
@@ -9,8 +15,3 @@ and add in your server 2 environment variables:
 (you can find your MONGO_URI in cloud.mongodb.com > your cluster > CONNECT)
 
 For localhost testing, you can use a .env file inside the config folder with these two strings.
-
-
-
-### For creating a link:
-Go in your browser to http://<your_domain>/to?url=<url_to_be_shorten.com>
