@@ -1,32 +1,56 @@
 const express = require('express');
 const router = express.Router();
-const shortid = require('shortid');
+const nanoid = require('nanoid');
+// const generate = require('nanoid/generate')
+
 const Url = require('../models/Url');
 const utils = require('../utils/utils');
 require('dotenv').config({ path: '../config/.env' });
 
 // Short URL Generator
-router.get('/short', async (req, res) => {
+
+router.get('/to', async (req, res) => {
     const origUrl = req.query.url;
     const base = process.env.BASE;
-    const urlId = shortid.generate(4);
+    let urlId = nanoid(4);
+    // let urlId = generate('1234a', 1);
+
     if (utils.validateUrl(origUrl)) {
         try {
-            let url = await Url.findOne({ origUrl });
-            if (url) {
-                res.json(url);
+            let findUrl = await Url.findOne({ origUrl });
+            if (findUrl) {
+                res.json(findUrl);
             } else {
-                const shortUrl = `${base}/${urlId}`;
-
-                url = new Url({
-                    origUrl,
-                    shortUrl,
-                    urlId,
-                    date: new Date(),
-                });
-
-                await url.save();
-                res.send(`<a href="${url.shortUrl}"><h1 style="text-align: center;">${url.shortUrl}</h1></a>`);
+                try {
+                    const shortUrl = `${base}/${urlId}`;
+                    let url = new Url({
+                        origUrl,
+                        shortUrl,
+                        urlId,
+                        date: new Date(),
+                    });
+                    await url.save();
+                    res.send(`<a href="${url.shortUrl}"><h1 style="text-align: center;">${url.shortUrl}</h1></a>`);
+                } catch (err) {
+                    if (err.code === 11000) {
+                        try {
+                            console.log('replacing ID...');
+                            urlId = nanoid(5);
+                            const shortUrl = `${base}/${urlId}`;
+                            let url = new Url({
+                                origUrl,
+                                shortUrl,
+                                urlId,
+                                date: new Date(),
+                            });
+                            await url.save();
+                            res.send(`<a href="${url.shortUrl}"><h1 style="text-align: center;">${url.shortUrl}</h1></a>`);
+                        } catch (err) {
+                            console.log(err);
+                            res.status(500).json('Server Error');
+                        }
+                    }
+                }
             }
         } catch (err) {
             console.log(err);
