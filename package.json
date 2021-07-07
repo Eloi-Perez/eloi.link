@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "express-force-https": "^1.0.0",
     "mongoose": "^5.13.0",
-    "nanoid": "^2.1.11"
+    "nanoid": "^2.1.11",
+    "qrcode": "^1.4.4"
   }
 }
