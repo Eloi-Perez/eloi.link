@@ -53,7 +53,7 @@ const responseHtml = async function (origUrl, shortUrl, urlId, date, clicks) {
 };
 
 router.get('/to', async (req, res) => {
-    const origUrl = req.query.url;
+    const origUrl = decodeURIComponent(req.query.url);
     const base = process.env.BASE;
     let urlId = nanoid(4);
     // let urlId = generate('1234a', 4); //to limit or expand the dictionary
