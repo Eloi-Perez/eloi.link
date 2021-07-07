@@ -20,6 +20,10 @@ app.get('/', (req, res) => {
     </div>`);
 });
 
+app.use('/favicon', (req, res) => { res.sendFile( __dirname + '/images/favicon.png') });
+app.use('/favicon.png', (req, res) => { res.sendFile( __dirname + '/images/favicon.png') });
+app.use('/favicon.ico', (req, res) => { res.sendFile( __dirname + '/images/favicon.png') });
+
 app.use('/', require('./routes/urls'));
 app.use('/', require('./routes/index'));
 // app.use('/api', require('./routes/apiurls'));
