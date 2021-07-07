@@ -19,7 +19,7 @@ const responseHtml = async function (origUrl, shortUrl, urlId, date, clicks) {
             pClicks = `<p>Clicks: ${clicks}</p>`
         } else { pClicks = '' }
 
-        let qr = async (toQR) => QRCode.toDataURL(toQR); // (toQR, { version: 2 })  // default size
+        let toQR = async (str) => QRCode.toDataURL(str); // (str, { version: 2 })  // default size
 
 
         html = `<!DOCTYPE html><html lang="en">
@@ -38,7 +38,7 @@ const responseHtml = async function (origUrl, shortUrl, urlId, date, clicks) {
             </head>
             <body>
                 <h1><a href="${shortUrl}">eloi.link/${urlId}</a></h1>
-                <img src=${await qr(shortUrl)}>
+                <img src=${await toQR(shortUrl)}>
                 <p>Origin Url: ${origUrl}</p>                
                 ${pClicks}
                 ${pDate}
@@ -57,12 +57,16 @@ router.get('/to', async (req, res) => {
     const base = process.env.BASE;
     let urlId = nanoid(4);
     // let urlId = generate('1234a', 4); //to limit or expand the dictionary
+    const responseJson = req.query.json;
 
     if (utils.validateUrl(origUrl)) {
         try {
             let findUrl = await Url.findOne({ origUrl });
             if (findUrl) {
-                res.send(await responseHtml(findUrl.origUrl, findUrl.shortUrl, findUrl.urlId, findUrl.date, findUrl.clicks));
+                if (responseJson === 'true') {
+                    return res.json({ clicks: findUrl.clicks, origUrl: findUrl.origUrl, shortUrl: findUrl.shortUrl, crationDate: findUrl.date });
+                }
+                return res.send(await responseHtml(findUrl.origUrl, findUrl.shortUrl, findUrl.urlId, findUrl.date, findUrl.clicks));
             } else {
                 try {
                     const shortUrl = `${base}/${urlId}`;
@@ -73,7 +77,10 @@ router.get('/to', async (req, res) => {
                         date: new Date(),
                     });
                     await url.save();
-                    res.send(await responseHtml(url.origUrl, url.shortUrl, url.urlId));
+                    if (responseJson === 'true') {
+                        return res.json({ origUrl: url.origUrl, shortUrl: url.shortUrl, crationDate: url.date });
+                    }
+                    return res.send(await responseHtml(url.origUrl, url.shortUrl, url.urlId));
                 } catch (err) {
                     if (err.code === 11000) { // if Duplicate shortUrl
                         try {
@@ -87,10 +94,13 @@ router.get('/to', async (req, res) => {
                                 date: new Date(),
                             });
                             await url.save();
-                            res.send(await responseHtml(url.origUrl, url.shortUrl, url.urlId));
+                            if (responseJson === 'true') {
+                                return res.json({ origUrl: url.origUrl, shortUrl: url.shortUrl, crationDate: url.date });
+                            }
+                            return res.send(await responseHtml(url.origUrl, url.shortUrl, url.urlId));
                         } catch (err) {
                             console.log(err);
-                            res.status(500).json('Server Error');
+                            return res.status(500).json('Server Error');
                         }
                     }
                 }
