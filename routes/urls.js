@@ -10,11 +10,18 @@ require('dotenv').config({ path: '../config/.env' });
 
 
 const responseHtml = async function (origUrl, shortUrl, urlId, date, clicks) {
-    let pDate, pClicks, html;
+    let scriptDate, pClicks, html;
     try {
         if (date) {
-            pDate = `<p>Creation Date: ${date}</p>`
-        } else { pDate = '' }
+            scriptDate = `
+                        let localDate = new Date('${date}');
+                        let divDate = document.querySelector('.divDate');
+                        let p = document.createElement('p');
+                        p.innerText = localDate;
+                        divDate.appendChild(p);
+                        `
+        } else { scriptDate = '' }
+
         if (clicks) {
             pClicks = `<p>Clicks: ${clicks}</p>`
         } else { pClicks = '' }
@@ -41,9 +48,12 @@ const responseHtml = async function (origUrl, shortUrl, urlId, date, clicks) {
             <body>
                 <h1><a href="${shortUrl}">eloi.link/${urlId}</a></h1>
                 <img src=${await toQR(shortUrl)}>
-                <p>Origin Url: ${origUrl}</p>                
-                ${pClicks}
-                ${pDate}
+                <p>Origin Url: ${origUrl}</p>
+                <div>${pClicks}</div>
+                <div class="divDate"></div>
+                <script>
+                    ${scriptDate}
+                </script>
             </body>
             </html>`;
 
