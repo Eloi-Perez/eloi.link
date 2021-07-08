@@ -26,7 +26,6 @@ app.use('/favicon.ico', (req, res) => { res.sendFile( __dirname + '/images/favic
 
 app.use('/', require('./routes/urls'));
 app.use('/', require('./routes/index'));
-// app.use('/api', require('./routes/apiurls'));
 
 
 
