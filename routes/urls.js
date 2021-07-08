@@ -29,21 +29,13 @@ const responseHtml = async function (origUrl, shortUrl, urlId, date, clicks) {
         let toQR = async (str) => QRCode.toDataURL(str); // (str, { version: 2 })  // default size
 
 
-        html = `<!DOCTYPE html><html lang="en">
+        html = `
+            <!DOCTYPE html><html lang="en">
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>eloi.link</title>
-                <style>
-                    body {
-                        background-color: DarkSlateBlue;
-                        color: azure;
-                        text-align: center;
-                    }
-                    a {
-                        color: white;
-                    }
-                </style>
+                <link rel="stylesheet" type="text/css" href="/styles.css">
             </head>
             <body>
                 <h1><a href="${shortUrl}">eloi.link/${urlId}</a></h1>
@@ -55,7 +47,8 @@ const responseHtml = async function (origUrl, shortUrl, urlId, date, clicks) {
                     ${scriptDate}
                 </script>
             </body>
-            </html>`;
+            </html>
+            `;
 
     } catch (err) {
         console.error(err)
