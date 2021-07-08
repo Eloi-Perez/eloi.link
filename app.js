@@ -20,7 +20,10 @@ app.use('/favicon.ico', (req, res) => { res.sendFile( __dirname + '/images/favic
 app.use('/', require('./routes/urls'));
 app.use('/', require('./routes/index'));
 
-
+app.use(function (req, res, next) {
+    console.log('404');
+    res.status(404).sendFile('/public/404.html', { root: __dirname });
+});
 
 // Server Setup
 const port = process.env.PORT || 3333;

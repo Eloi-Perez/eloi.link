@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Url = require('../models/Url');
+const path = require('path');
 
 router.get('/:urlId', async (req, res) => {
     try {
@@ -9,7 +10,7 @@ router.get('/:urlId', async (req, res) => {
             url.clicks++;
             url.save();
             return res.redirect(url.origUrl);
-        } else res.status(404).json('Not found');
+        } else res.status(404).sendFile('/404.html', { root: path.resolve('public') });
     } catch (err) {
         console.log(err);
         res.status(500).json('Server Error');
