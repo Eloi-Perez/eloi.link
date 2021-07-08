@@ -14,10 +14,10 @@ const responseHtml = async function (origUrl, shortUrl, urlId, date, clicks) {
     try {
         if (date) {
             scriptDate = `
-                        let localDate = new Date('${date}');
+                        let localTimeDate = new Date('${date}');
                         let divDate = document.querySelector('.divDate');
                         let p = document.createElement('p');
-                        p.innerText = localDate;
+                        p.innerText = 'Creation Date: ' + localTimeDate;
                         divDate.appendChild(p);
                         `
         } else { scriptDate = '' }
