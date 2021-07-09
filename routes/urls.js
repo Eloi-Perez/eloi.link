@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
 const nanoid = require('nanoid');
 // const generate = require('nanoid/generate')
 const QRCode = require('qrcode');
@@ -12,43 +13,48 @@ require('dotenv').config({ path: '../config/.env' });
 const responseHtml = async function (origUrl, shortUrl, urlId, date, clicks) {
     let scriptDate, pClicks, html;
     try {
+        let toQR = async (str) => QRCode.toDataURL(str); // (str, { version: 2 })  // default size
+        let qrImage = await toQR(shortUrl);
+        let scriptImgSrc = `
+        let qrImg = document.querySelector('.qrcode img').src;
+        document.querySelector('.qrcode').href = qrImg;
+        `
+
         if (date) {
             scriptDate = `
-                        let localTimeDate = new Date('${date}');
-                        let divDate = document.querySelector('.divDate');
-                        let p = document.createElement('p');
-                        p.innerText = 'Creation Date: ' + localTimeDate;
-                        divDate.appendChild(p);
-                        `
+        let localTimeDate = new Date('${date}');
+        let divDate = document.querySelector('.divDate');
+        let p = document.createElement('p');
+        p.innerText = 'Creation Date: ' + localTimeDate;
+        divDate.appendChild(p);
+        `
         } else { scriptDate = '' }
 
         if (clicks) {
             pClicks = `<p>Clicks: ${clicks}</p>`
         } else { pClicks = '' }
 
-        let toQR = async (str) => QRCode.toDataURL(str); // (str, { version: 2 })  // default size
+        
 
-
-        html = `
-            <!DOCTYPE html><html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>eloi.link</title>
-                <link rel="stylesheet" type="text/css" href="/styles.css">
-            </head>
-            <body>
-                <h1><a href="${shortUrl}">eloi.link/${urlId}</a></h1>
-                <img src=${await toQR(shortUrl)}>
-                <p>Origin Url: ${origUrl}</p>
-                <div>${pClicks}</div>
-                <div class="divDate"></div>
-                <script>
-                    ${scriptDate}
-                </script>
-            </body>
-            </html>
-            `;
+        html = `<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eloi.link</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <h1><a href="${shortUrl}">eloi.link/${urlId}</a></h1>
+    <a class="qrcode" download="QRcode.png"><img src=${qrImage}></a>
+    <p>Origin Url: ${origUrl}</p>
+    <div>${pClicks}</div>
+    <div class="divDate"></div>
+    <h3><a href="/">Create a new link</a></h3>
+    <script>
+    ${scriptImgSrc}${scriptDate}
+    </script>
+</body>
+</html>`;
 
     } catch (err) {
         console.error(err)
