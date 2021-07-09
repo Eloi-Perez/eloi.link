@@ -2,11 +2,14 @@
 #### An easy to use and fast URL shortener
 
 ### For creating a link:
-Go to https://eloi.link/to?url=<url_to_be_shorten>
 
-(Add your url after the =)
+Use the form on https://eloi.link, or
+
+use GET https://eloi.link/to?url=<url_to_be_shorten>
 
 You can also use the parameter json=true (https://eloi.link/to?json=true&url=<url_to_be_shorten>)
+
+The web form will encode the URL so, if you are requesting directly to the API, your URLs with parameters need to be encoded first or encode at least the symbol "&" (substitute for "%26"). In JavaScript I recommend using encodeURIComponent() for the encoding.
 
 
 ### About
