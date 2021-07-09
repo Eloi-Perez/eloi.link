@@ -115,7 +115,7 @@ router.get('/to', async (req, res) => {
             res.status(500).json('Server Error');
         }
     } else {
-        res.status(400).json('Invalid Original Url');
+        res.status(400).sendFile('/invalid.html', { root: path.resolve('public') });
     }
 });
 
