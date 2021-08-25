@@ -1,6 +1,9 @@
 # eloi.link
 #### An easy to use and fast URL shortener
 
+![web image](https://github.com/Eloi-Perez/eloi.link/blob/assets/eloi.link.png)
+
+
 ### For creating a link:
 
 Use the form on https://eloi.link, or
@@ -12,8 +15,18 @@ You can also use the parameter json=true (https://eloi.link/to?json=true&url=<ur
 The web form will encode the URL so, if you are requesting directly to the API, your URLs with parameters need to be encoded first or encode at least the symbol "&" (substitute for "%26"). In JavaScript I recommend using encodeURIComponent() for the encoding.
 
 
-### About
-This project uses Node, Express, Mongoose, NanoID and QRcode.
+## Technologies used:
+* Node.js
+* Express
+* Mongoose
+* NanoID
+* QRcode
+* HTML Template strings
+
+The response HTML is generated dynamically in Node, using plain JS.
+
+
+### Local Developing and testing
 
 If you want to use this app on your own hosting you will need a MongoDB database and to add in your server 2 environment variables:
 * BASE=http://<your_domain> (or with https)
