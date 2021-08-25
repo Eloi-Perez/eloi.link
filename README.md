@@ -6,13 +6,13 @@
 
 ### For creating a link:
 
-Use the form on https://eloi.link, or
+Use the form on [eloi.link](https://eloi.link "eloi.link"), or use this API call:
 
-use GET https://eloi.link/to?url=<url_to_be_shorten>
+GET `https://eloi.link/to?url=<url_to_be_shorten>`
 
-You can also use the parameter json=true (https://eloi.link/to?json=true&url=<url_to_be_shorten>)
+You can also add the parameter `json=true` (`https://eloi.link/to?json=true&url=<url_to_be_shorten>`), this way you will get a JSON as a response.
 
-The web form will encode the URL so, if you are requesting directly to the API, your URLs with parameters need to be encoded first or encode at least the symbol "&" (substitute for "%26"). In JavaScript I recommend using encodeURIComponent() for the encoding.
+The web form will encode the URL so, if you are requesting directly to the API, your URLs with parameters need to be encoded first, or at least encode the symbol `&` (substitute for `%26`). In JavaScript I recommend using `encodeURIComponent()` for the encoding.
 
 
 ## Technologies used:
@@ -29,8 +29,8 @@ The response HTML is generated dynamically in Node, using plain JS.
 ### Local Developing and testing
 
 If you want to use this app on your own hosting you will need a MongoDB database and to add in your server 2 environment variables:
-* BASE=http://<your_domain> (or with https)
-* MONGO_URI=mongodb+srv://<your_user>:<your_password>@<your_cluster>.<mongo_code>.mongodb.net/<your_collection>?retryWrites=true&w=majority
+* `BASE=http://<your_domain>` (or with https)
+* `MONGO_URI=mongodb+srv://<your_user>:<your_password>@<your_cluster>.<mongo_code>.mongodb.net/<your_collection>?retryWrites=true&w=majority`
 (you can find your MONGO_URI in cloud.mongodb.com > your cluster > CONNECT)
 
-For localhost testing, you can use a .env file inside the config folder with these two strings.
+For localhost testing, you can use a `.env` file inside the config folder with these two strings.
