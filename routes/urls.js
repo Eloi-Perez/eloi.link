@@ -34,9 +34,7 @@ const responseHtml = async function (origUrl, shortUrl, urlId, date, clicks) {
             pClicks = `<p>Clicks: ${clicks}</p>`
         } else { pClicks = '' }
 
-        
-
-        html = `<!DOCTYPE html><html lang="en">
+        html = /*html*/`<!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
