@@ -21,9 +21,10 @@ The web form will encode the URL so, if you are requesting directly to the API, 
 * Mongoose
 * NanoID
 * QRcode
-* HTML Template strings
+* JavaScript HTML Template strings<br>
+  (When you request a shorlink, the response HTML is generated dynamically in Node, using plain JS)
 
-The response HTML is generated dynamically in Node, using plain JS.
+
 
 
 ### Local Developing and testing
