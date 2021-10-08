@@ -22,14 +22,14 @@ The web form will encode the URL so, if you are requesting directly to the API, 
 * NanoID
 * QRcode
 * JavaScript HTML Template strings<br>
-  (When you request a shorlink, the response HTML is generated dynamically in Node, using plain JS)
+  (When you request a shortlink, the response HTML is generated dynamically in Node, using plain JS)
 
 
 
 
 ### Local Developing and testing
 
-If you want to use this app on your own hosting you will need a MongoDB database and to add in your server 2 environment variables:
+If you want to use this app on you hosting, you will need a MongoDB database and to add in your server two environment variables:
 * `BASE=http://<your_domain>` (or with https)
 * `MONGO_URI=mongodb+srv://<your_user>:<your_password>@<your_cluster>.<mongo_code>.mongodb.net/<your_collection>?retryWrites=true&w=majority`
 (you can find your MONGO_URI in cloud.mongodb.com > your cluster > CONNECT)
