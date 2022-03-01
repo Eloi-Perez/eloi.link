@@ -1,9 +1,9 @@
 const express = require('express');
-const secure = require('express-force-https');
+// const secure = require('express-force-https'); // no need with Nginx
 require('dotenv').config({ path: './config/.env' });
 
 const app = express();
-app.use(secure);
+// app.use(secure);
 
 const connectDB = require('./config/db');
 connectDB();
