@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const nanoid = require('nanoid');
-// const generate = require('nanoid/generate')
+// import { customAlphabet } from 'nanoid'
 const QRCode = require('qrcode');
 
 const Url = require('../models/Url');
@@ -65,7 +65,7 @@ router.get('/to', async (req, res) => {
     const origUrl = decodeURIComponent(req.query.url);
     const base = process.env.BASE;
     let urlId = nanoid(4);
-    // let urlId = generate('1234a', 4); //to limit or expand the dictionary
+    // let urlId = customAlphabet('1234a', 4); //to limit or expand the dictionary
     const responseJson = req.query.json;
 
     if (utils.validateUrl(origUrl)) {
