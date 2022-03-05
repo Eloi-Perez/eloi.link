@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const nanoid = require('nanoid');
+const { nanoid } = require('nanoid');
 // import { customAlphabet } from 'nanoid'
 const QRCode = require('qrcode');
 
