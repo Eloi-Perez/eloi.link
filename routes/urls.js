@@ -73,7 +73,7 @@ router.get('/to', async (req, res) => {
             let findUrl = await Url.findOne({ origUrl });
             if (findUrl) {
                 if (responseJson === 'true') {
-                    return res.json({ clicks: findUrl.clicks, origUrl: findUrl.origUrl, shortUrl: findUrl.shortUrl, crationDate: findUrl.date });
+                    return res.json({ clicks: findUrl.clicks, origUrl: findUrl.origUrl, shortUrl: findUrl.shortUrl, creationDate: findUrl.date });
                 }
                 return res.send(await responseHtml(findUrl.origUrl, findUrl.shortUrl, findUrl.urlId, findUrl.date, findUrl.clicks));
             } else {
