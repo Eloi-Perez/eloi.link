@@ -64,7 +64,7 @@ const responseHtml = async function (origUrl, shortUrl, urlId, date, clicks) {
 router.get('/to', async (req, res) => {
     const origUrl = decodeURIComponent(req.query.url);
     const base = process.env.BASE;
-    let urlId = nanoid(4);
+    // let urlId = nanoid(4);
     // let urlId = customAlphabet('1234a', 4); //to limit or expand the dictionary
     const responseJson = req.query.json;
 
@@ -77,42 +77,34 @@ router.get('/to', async (req, res) => {
                 }
                 return res.send(await responseHtml(findUrl.origUrl, findUrl.shortUrl, findUrl.urlId, findUrl.date, findUrl.clicks));
             } else {
-                try {
-                    const shortUrl = `${base}/${urlId}`;
-                    let url = new Url({
-                        origUrl,
-                        shortUrl,
-                        urlId,
-                        date: new Date(),
-                    });
-                    await url.save();
-                    if (responseJson === 'true') {
-                        return res.json({ origUrl: url.origUrl, shortUrl: url.shortUrl, crationDate: url.date });
-                    }
-                    return res.send(await responseHtml(url.origUrl, url.shortUrl, url.urlId));
-                } catch (err) {
-                    if (err.code === 11000) { // if Duplicate shortUrl
-                        try {
-                            console.log('replacing ID...');
-                            urlId = nanoid(5);
-                            const shortUrl = `${base}/${urlId}`;
-                            let url = new Url({
-                                origUrl,
-                                shortUrl,
-                                urlId,
-                                date: new Date(),
-                            });
-                            await url.save();
-                            if (responseJson === 'true') {
-                                return res.json({ origUrl: url.origUrl, shortUrl: url.shortUrl, crationDate: url.date });
-                            }
-                            return res.send(await responseHtml(url.origUrl, url.shortUrl, url.urlId));
-                        } catch (err) {
+                let len = 4;
+                async function create() {
+                    let urlId = nanoid(len);
+                    try {
+                        const shortUrl = `${base}/${urlId}`;
+                        let url = new Url({
+                            origUrl,
+                            shortUrl,
+                            urlId,
+                            date: new Date(),
+                        });
+                        await url.save();
+                        if (responseJson === 'true') {
+                            return res.json({ origUrl: url.origUrl, shortUrl: url.shortUrl, creationDate: url.date });
+                        }
+                        return res.send(await responseHtml(url.origUrl, url.shortUrl, url.urlId));
+
+                    } catch (err) {
+                        if (err.code === 11000) { // if Duplicate shortUrl
+                            len += 1;
+                            create();
+                        } else {
                             console.log(err);
                             return res.status(500).json('Server Error');
                         }
                     }
                 }
+                create();
             }
         } catch (err) {
             console.log(err);
