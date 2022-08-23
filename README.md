@@ -27,11 +27,11 @@ The web form will encode the URL so, if you are requesting directly to the API, 
 
 
 
-### Local Developing and testing
+### Local Development
 
-If you want to use this app on you hosting, you will need a MongoDB database and to add in your server two environment variables:
+If you want to use this app on your server, you will need a MongoDB database and to add in your server two environment variables:
 * `BASE=http://<your_domain>` (or with https)
 * `MONGO_URI=mongodb+srv://<your_user>:<your_password>@<your_cluster>.<mongo_code>.mongodb.net/<your_collection>?retryWrites=true&w=majority`
 (you can find your MONGO_URI in cloud.mongodb.com > your cluster > CONNECT)
 
-For localhost testing, you can use a `.env` file inside the config folder with these two strings.
+For a localhost server, you can use a `.env` file inside the config folder with these two strings.
